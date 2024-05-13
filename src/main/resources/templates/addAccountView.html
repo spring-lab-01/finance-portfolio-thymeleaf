@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Portfolios</title>
+    <th:block th:replace="fragments/header.html :: common-header"/>
+</head>
+<body>
+<div th:insert="fragments/header.html :: header"/>
+<div class="container-fluid">
+    <h4 th:align="center">Adding Account for Portfolio -
+        <th:block th:text="${selectedPortfolio.name}"/>
+    </h4>
+    <div th:if="${selectedPortfolio.id != 0}">
+        <form action="#" th:action="@{/accounts}" method="post" th:object="${account}">
+            <table class="table table-striped">
+                <tr>
+                    <td>Name</td>
+                    <td><input type="text" th:field="${account.name}"></td>
+                </tr>
+                <tr>
+                    <td>Current Balance</td>
+                    <td><input type="text" th:field="${account.balance}"></td>
+                </tr>
+                <tr hidden="true">
+                    <td>Current Balance</td>
+                    <td><input type="text" th:field="${account.portfolioId}"></td>
+                </tr>
+            </table>
+            <button type="submit" name="save">Save</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

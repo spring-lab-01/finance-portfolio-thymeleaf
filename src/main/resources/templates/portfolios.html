@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Portfolios</title>
+    <th:block th:replace="fragments/header.html :: common-header"/>
+</head>
+<body>
+<div th:insert="fragments/header.html :: header"/>
+<div class="container-fluid">
+    <!-- List portfolios -- start -->
+    <h4 th:align="center">Portfolios </h4>
+    <form th:action="@{/portfolios}" method="post">
+        <table class="table table-striped">
+            <thead class="thead-dark">
+            <th>#</th>
+            <th>Name</th>
+            <th>Current Value</th>
+            <th>Currency</th>
+            <th>Action</th>
+            </thead>
+            <tr th:each="portfolio, row : ${portfolios}">
+                <td th:text="${portfolio.id}"></td>
+                <td th:text="${portfolio.name}"></td>
+                <td th:text="${portfolio.totalValue}"></td>
+                <td th:text="${portfolio.currency}"></td>
+                <td>
+                    <button type="submit" name="edit" th:value="*{portfolios[__${row.index}__].id}">Details</button>
+                    <button type="submit" name="editView" th:value="*{portfolios[__${row.index}__].id}">Edit</button>
+                    <button type="submit" name="delete" th:value="*{portfolios[__${row.index}__].id}" onclick="return confirm('Are you sure you want to delete?')">Delete</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <!-- List portfolios -- End -->
+
+    <!-- Account Details and Add Account -- start -->
+    <div th:if="${selectedPortfolio.id != 0}">
+        <h4 th:align="center">Accounts for Portfolio - <th:block th:text="${selectedPortfolio.name}"/></h4>
+        <form action="#" th:action="@{/accounts}" method="post">
+            <button type="submit" name="addrow" th:value="${selectedPortfolio.id}">Add Account</button>
+        </form>
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <th>#</th>
+                <th>Name</th>
+                <th>Balance</th>
+                <th>Portfolio #</th>
+            </thead>
+            <tr th:each="account, row : ${selectedPortfolio.accounts}">
+                <td th:text="${account.id}"></td>
+                <td th:text="${account.name}"></td>
+                <td th:text="${account.balance}"></td>
+                <td th:text="${account.portfolioId}"></td>
+            </tr>
+        </table>
+    </div>
+    <!-- Account Details and Add Account End -- start -->
+
+</div>
+</body>
+</html>

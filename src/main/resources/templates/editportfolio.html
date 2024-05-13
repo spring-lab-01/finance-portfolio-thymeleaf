@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Portfolios</title>
+    <th:block th:replace="fragments/header.html :: common-header"/>
+</head>
+<body>
+<div th:insert="fragments/header.html :: header"/>
+<div class="container-fluid">
+    <h4 th:align="center">Edit Portfolio - <th:block th:text="${selectedPortfolio.name}"/></h4>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+        <th>#</th>
+        <th>Name</th>
+        <th>Current Value</th>
+        <th>Currency</th>
+        </thead>
+        <tr>
+            <td th:text="${selectedPortfolio.id}"></td>
+            <td th:text="${selectedPortfolio.name}"></td>
+            <td th:text="${selectedPortfolio.totalValue}"></td>
+            <td th:text="${selectedPortfolio.currency}"></td>
+        </tr>
+    </table>
+    <div th:if="${selectedPortfolio.id != 0}">
+        <h4 th:align="center">Accounts for Portfolio - <th:block th:text="${selectedPortfolio.name}"/></h4>
+        <form action="#" th:action="@{/accounts}" method="post">
+            <button type="submit" name="addrow" th:value="${selectedPortfolio.id}">Add Account</button>
+        </form>
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <th>#</th>
+                <th>Name</th>
+                <th>Balance</th>
+                <th>Portfolio #</th>
+            </thead>
+            <tr th:each="account, row : ${selectedPortfolio.accounts}">
+                <td th:text="${account.id}"></td>
+                <td th:text="${account.name}"></td>
+                <td th:text="${account.balance}"></td>
+                <td th:text="${account.portfolioId}"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>

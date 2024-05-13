@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Portfolios</title>
+    <th:block th:replace="fragments/header.html :: common-header"/>
+</head>
+<body class="article">
+<div th:insert="fragments/header.html :: header"/>
+<div id="header">
+    <h2 th:align="center">Dashboard</h2>
+</div>
+<div class="container-fluid">
+    <!-- List portfolios -- start -->
+    <h4>Total Portfolio Values </h4>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+        <th>#</th>
+        <th>Currency</th>
+        <th>Current Value</th>
+        </thead>
+        <tr th:each="item, row : ${portfolioDashboardDtoList}">
+            <td th:text="${row.index + 1}"></td>
+            <td th:text="${item.currency}"></td>
+            <td th:text="${item.totalValue}"></td>
+        </tr>
+    </table>
+    <!-- List portfolios -- End -->
+
+</div>
+
+</body>
+</html>
